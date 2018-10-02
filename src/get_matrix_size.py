@@ -1,19 +1,12 @@
 # Purpose: To get suitable size of X, Y matrix
 
-import tensorflow as tf
-from tensorflow import keras
 from PIL import Image
 import os
 
 import numpy as np
 
-import matplotlib.pyplot as plt
-
 _DIR_X = "img/Arial Unicode/"
 _DIR_Y = "img/UnGungseo/"
-
-X = []
-Y = []
 
 largest = 0
 
@@ -39,4 +32,4 @@ for filename in os.listdir(_DIR_Y):
 		if w > largest:
 			largest = w
 
-print("largest size = " + largest)
+print("largest size = " + str(largest))
