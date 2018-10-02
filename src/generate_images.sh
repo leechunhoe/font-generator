@@ -1,1 +1,1 @@
-fontforge -script generate_images.py
+fontforge -script .generate_images.py
