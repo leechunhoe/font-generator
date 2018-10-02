@@ -17,29 +17,34 @@ Y = []
 
 largest = 0
 
-for filename in os.listdir(_DIR_X):
-	if filename.endswith(".bmp"):
-		im = Image.open(_DIR_X + filename)
-		p = np.array(im)
+def normalise(raw_matrix):
+	background_matrix = np.zeros((SIZE, SIZE))
+	rx = raw_matrix.shape[0]
+	ry = raw_matrix.shape[1]
+	# TODO: Put into center
+	background_matrix[0:rx, 0:ry] = raw_matrix
+	return background_matrix
 
+def get_image_vector(filename, directory):
+	if filename.endswith(".bmp"):
+		image = Image.open(directory + filename)
+		image_matrix = normalise(np.array(image))
+		return image_matrix.flatten()
+	else:
+		return None
+
+for filename in os.listdir(_DIR_X):
+	x = get_image_vector(filename, _DIR_X)
+	X.append(x)
 
 for filename in os.listdir(_DIR_Y):
-	if filename.endswith(".bmp"):
-		im = Image.open(_DIR_Y + filename)
-		p = np.array(im)
+	y = get_image_vector(filename, _DIR_Y)
+	Y.append(y)
 
-
-
-
-# print(plt.__version__)
-
-# fashion_mnist = keras.datasets.fashion_mnist
-
-# (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
-
+print(Y[100])
 
 # plt.figure()
-# plt.imshow(p)
+# plt.imshow(Y[100])
 # plt.colorbar()
 # plt.grid(False)
 # plt.show()
