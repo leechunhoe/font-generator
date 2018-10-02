@@ -5,7 +5,9 @@ dir_input = "ttf/"
 dir_output = "img/"
 
 # Define your font name here
-font_filename = "Impact.ttf"
+# font_filename = "Impact.ttf"
+# font_filename = "Arial Unicode.ttf"
+font_filename = "UnGungseo.ttf"
 
 F = fontforge.open(dir_input + font_filename)
 
@@ -22,4 +24,3 @@ os.mkdir(dir_this_font)
 for name in F:
     filename = name + ".bmp"
     F[name].export(dir_this_font + "/" + filename)
-    # F[name].export(filename, 600)     # set height to 600 pixels
