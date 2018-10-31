@@ -7,13 +7,16 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-_DIR_X = "img/Arial Unicode/"
-_DIR_Y = "img/UnGungseo/"
+_DIR_X = "img/Songti_SC_Regular/"
+_DIR_Y = "img/Gungseouche/"
 
 SIZE = 250
 
-X = []
-Y = []
+X_TRAIN = []
+Y_TRAIN = []
+
+X_PREDICT = []
+Y_PREDICT = []
 
 largest = 0
 
@@ -36,21 +39,57 @@ def get_image_vector(filename, directory):
 	else:
 		return None
 
-for filename in os.listdir(_DIR_X):
-	x = get_image_vector(filename, _DIR_X)
-	X.append(x)
+# 1. Get file name of training and prediction datasets
+
+y_names = []
+train_names = []
+predict_names = []
 
 for filename in os.listdir(_DIR_Y):
+	y_names.append(filename)
+
+for filename in os.listdir(_DIR_X):
+	if filename in y_names:
+		train_names.append(filename)
+	else:
+		predict_names.append(filename)
+
+# 2. Load training dataset
+for filename in train_names:
+	x = get_image_vector(filename, _DIR_X)
 	y = get_image_vector(filename, _DIR_Y)
-	Y.append(y)
+	X_TRAIN.append(x)
+	Y_TRAIN.append(y)
 
 
 
-# print(Y[0])
+# TODO: 3. Train neural network
 
-# plt.figure()
-# plt.imshow(Y[90])
-# plt.colorbar()
-# plt.grid(False)
-# plt.show()
+# TODO: 4. Predict from X_PREDICT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
