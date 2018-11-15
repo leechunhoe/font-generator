@@ -39,7 +39,14 @@ def get_image_vector(filename, directory):
 	else:
 		return None
 
-# 1. Get file name of training and prediction datasets
+def draw(image_matrix):
+	plt.figure()
+	plt.imshow(image_matrix)
+	plt.colorbar()
+	plt.grid(False)
+	plt.show()
+
+# Get file name of training and prediction datasets
 
 y_names = []
 train_names = []
@@ -54,16 +61,44 @@ for filename in os.listdir(_DIR_X):
 	else:
 		predict_names.append(filename)
 
-# 2. Load training dataset
+# Load training dataset
 for filename in train_names:
 	x = get_image_vector(filename, _DIR_X)
 	y = get_image_vector(filename, _DIR_Y)
 	X_TRAIN.append(x)
 	Y_TRAIN.append(y)
 
+print("X_TRAIN loaded: " + str(len(X_TRAIN)))
+print("Y_TRAIN loaded: " + str(len(Y_TRAIN)))
 
+# train: 5013
+# predict: 25750
 
-# TODO: 3. Train neural network
+# TODO: Train neural network
+
+model = keras.Sequential([
+	keras.layers.Flatten(input_shape=(250, 250)),
+	keras.layers.Dense(255, activation=tf.nn.relu),
+	keras.layers.Dense(250 * 250, activation=tf.nn.softmax)
+])
+
+model.compile(optimizer=tf.train.AdamOptimizer(), 
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+test_loss, test_acc = model.evaluate(X_TRAIN, Y_TRAIN)
+
+print('Test accuracy:', test_acc)
+
+model.fit(X_TRAIN, Y_TRAIN, epochs=5)
+
+for filename in predict_names:
+	x = get_image_vector(filename, _DIR_X)
+	X_PREDICT.append(x)
+
+predictions = model.predict(X_PREDICT)
+
+print(predictions[300])
 
 # TODO: 4. Predict from X_PREDICT
 
